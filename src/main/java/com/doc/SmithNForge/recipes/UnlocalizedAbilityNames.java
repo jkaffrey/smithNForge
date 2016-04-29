@@ -17,7 +17,7 @@ public class UnlocalizedAbilityNames {
 	public static String disableExplosions = "smithNForge.abilities.noExplode";
 	public static String disableEnderTele = "smithNForge.abilities.noEnderTele";
 	
-	public static String[] allAbilities = new String[] {
+	public static String[] allAbilities = new String[]{
 		
 		jumpBoost,
 		speedBoost,
