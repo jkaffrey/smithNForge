@@ -11,6 +11,7 @@ public class UnlocalizedAbilityNames {
 	public static String teleport = "smithNForge.abilities.teleport";
 	public static String noFall = "smithNForge.abilities.noFall";
 	public static String quickPalms = "smithNForge.abilities.palms";
+	public static String mobIgnore = "smithNForge.abilities.ignoreMobs";
 	
 	//mob based
 	public static String disableExplosions = "smithNForge.abilities.noExplode";
@@ -28,6 +29,7 @@ public class UnlocalizedAbilityNames {
 		noFall,
 		quickPalms,
 		disableExplosions,
-		disableEnderTele
+		disableEnderTele,
+		mobIgnore
 	};
 }

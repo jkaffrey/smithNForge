@@ -3,14 +3,14 @@ package com.doc.SmithNForge.listeners;
 import com.doc.SmithNForge.entity.ExtendedPlayer;
 import com.doc.SmithNForge.recipes.UnlocalizedAbilityNames;
 
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class EventHandlerCommon {
 
@@ -43,16 +43,15 @@ public class EventHandlerCommon {
 	}
 
 	@SubscribeEvent
-	public void onLiving(LivingUpdateEvent updateEvent) {
+	public void onLiving(PlayerTickEvent updateEvent) {
 
-		if (updateEvent.entity != null && updateEvent.entity instanceof EntityPlayer) {
+		if (updateEvent.player != null) {
 
-			EntityPlayer ePlayer = (EntityPlayer) updateEvent.entity;
-			ExtendedPlayer props = ExtendedPlayer.get(ePlayer);
+			ExtendedPlayer props = ExtendedPlayer.get(updateEvent.player);
 
 			props.clearEffects();
 
-			for (ItemStack armourItem : ePlayer.inventory.armorInventory) {
+			for (ItemStack armourItem : updateEvent.player.inventory.armorInventory) {
 				for (String name : UnlocalizedAbilityNames.allAbilities) {
 					if (armourItem != null && armourItem.hasTagCompound()) {
 
@@ -68,16 +67,17 @@ public class EventHandlerCommon {
 			}
 
 			for (String effects : props.effects) {
+				
 
 				if (effects.equalsIgnoreCase(UnlocalizedAbilityNames.speedBoost)) {
 					
-					ePlayer.capabilities.setPlayerWalkSpeed(ePlayer.capabilities.getWalkSpeed() + WALK_INCREASE);
+					updateEvent.player.capabilities.setPlayerWalkSpeed(updateEvent.player.capabilities.getWalkSpeed() + WALK_INCREASE);
 				} else {
 
-					if (ePlayer.capabilities.getWalkSpeed() > 0.1f)
-						ePlayer.capabilities.setPlayerWalkSpeed(ePlayer.capabilities.getWalkSpeed() - WALK_INCREASE);
+					if (updateEvent.player.capabilities.getWalkSpeed() > 0.1f)
+						updateEvent.player.capabilities.setPlayerWalkSpeed(updateEvent.player.capabilities.getWalkSpeed() - WALK_INCREASE);
 					else
-						ePlayer.capabilities.setPlayerWalkSpeed(0.1f);
+						updateEvent.player.capabilities.setPlayerWalkSpeed(0.1f);
 				}
 			}
 		}
