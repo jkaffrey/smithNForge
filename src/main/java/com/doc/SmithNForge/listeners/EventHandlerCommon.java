@@ -56,8 +56,8 @@ public class EventHandlerCommon {
 					if (armourItem != null && armourItem.hasTagCompound()) {
 
 						if (armourItem.getTagCompound().hasKey("cracked"))
-								break;
-						
+							break;
+
 						if (armourItem.getTagCompound().hasKey(name)) {
 
 							props.effects.add(name);
@@ -67,10 +67,10 @@ public class EventHandlerCommon {
 			}
 
 			for (String effects : props.effects) {
-				
 
+				//Speed boost
 				if (effects.equalsIgnoreCase(UnlocalizedAbilityNames.speedBoost)) {
-					
+
 					updateEvent.player.capabilities.setPlayerWalkSpeed(updateEvent.player.capabilities.getWalkSpeed() + WALK_INCREASE);
 				} else {
 
@@ -78,6 +78,15 @@ public class EventHandlerCommon {
 						updateEvent.player.capabilities.setPlayerWalkSpeed(updateEvent.player.capabilities.getWalkSpeed() - WALK_INCREASE);
 					else
 						updateEvent.player.capabilities.setPlayerWalkSpeed(0.1f);
+				}
+				
+				//flight
+				if (effects.equalsIgnoreCase(UnlocalizedAbilityNames.flight) && !updateEvent.player.capabilities.allowFlying) {
+					
+					updateEvent.player.capabilities.allowFlying = true;
+				} else if (updateEvent.player.capabilities.allowFlying) {
+					
+					updateEvent.player.capabilities.allowFlying = false;
 				}
 			}
 		}
